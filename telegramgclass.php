@@ -52,7 +52,7 @@ class TG
 
         imagefilledrectangle($im, 0, 0, $img_x, $img_y, $white);
         imagefttext($im, $font_size, 0, $font_size, $font_size, $black, $font_file, $photo_message);
-        imagejpeg($im, 'gen_images/c-' . $id . '.jpeg');
+        imagejpeg($im, 'gen_image.jpeg');
         imagedestroy($im);
 
         //Удаление клавы
@@ -63,7 +63,7 @@ class TG
             
             $data = array(
                 'chat_id' => $id,
-                'photo' => 'https://dpos.space/portfoleo-bot/gen_images/c-' . $id . '.jpeg',
+                'photo' => 'https://dpos.space/portfoleo-bot/gen_image.jpeg',
                 'caption' => $message,
                 'parse_mode' => 'HTML',
                 'reply_markup' => $encodedMarkup
@@ -71,7 +71,7 @@ class TG
         } else { //Отправка сообщения
             $data = array(
                 'chat_id' => $id,
-                'photo' => 'https://dpos.space/portfoleo-bot/gen_images/c-' . $id . '.jpeg',
+                'photo' => 'https://dpos.space/portfoleo-bot/gen_image.jpeg',
                 'caption' => $message,
                 'parse_mode' => 'HTML',
             );
