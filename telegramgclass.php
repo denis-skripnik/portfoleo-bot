@@ -40,9 +40,9 @@ class TG
         $photo_message = "\n" . preg_replace('/<.+?>/', '', $message) . "\n";
         $font_file = './img_font.ttf';
         $font_size = 10;
-        $img_y = sizeof(explode("\n", $str3)) * $font_size * 1.35;
+        $img_y = sizeof(explode("\n", $photo_message)) * $font_size * 1.35;
         $img_x = 0;
-        $str_arr = preg_split("/\n/", $str3);
+        $str_arr = preg_split("/\n/", $photo_message);
         foreach ($str_arr as $str_val) if ($img_x < strlen($str_val)) $img_x = strlen($str_val);
         $img_x = $font_size * ($img_x * 0.44 + 2);
 
