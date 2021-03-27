@@ -37,7 +37,7 @@ class TG
 
     public function photo($id, $message, $reply_to_message_id, $keyboard)
     {
-        $photo_message = "\n" . preg_replace('/<.+?>/', '', $message) . "\n";
+        $photo_message = "\n" . preg_replace('/<.+?>/gm', '', $message) . "\n";
         $font_file = './img_font.ttf';
         $font_size = 10;
         $img_y = sizeof(explode("\n", $photo_message)) * $font_size * 1.35;
