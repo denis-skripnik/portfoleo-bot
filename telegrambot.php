@@ -46,8 +46,9 @@ $tg = new tg($api_key);
 $chat_id = $arr['message']['chat']['id'];
 if (!isset($arr['callback_query'])) {
     $text = (isset($arr['message']['text']) ? $arr['message']['text'] : '');
+    $tg->send($chat_id, 'Пожалуйста, подождите... Идёт получение и обработка данных...', 0, []);
     $data = botControl($text);
-$tg->photo($chat_id, $data['msg'], 0, $data['buttons']);
+    $tg->photo($chat_id, $data['msg'], 0, $data['buttons']);
 } else if (isset($arr['callback_query']) && $arr['callback_query']['data']) {
     $data = botControl($arr['callback_query']['data']);
     $tg->edit($arr['callback_query']['message']['chat']['id'], $arr['callback_query']['message']['message_id'], $data['msg'], $data['buttons']);

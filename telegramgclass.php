@@ -37,12 +37,13 @@ class TG
 
     public function photo($id, $message, $reply_to_message_id, $keyboard)
     {
-        $photo_message = "\n" . preg_replace('/<.+?>/gm', '', $message) . "\n";
+        $pfilename = 'gen_images/id-' . $id . '_t-' . time() . '.jpeg';
+        $photo_message = "\n" . preg_replace("/<.+?>/", '', $message) . "\n";
         $font_file = './img_font.ttf';
-        $font_size = 10;
+        $font_size = 16;
         $img_y = sizeof(explode("\n", $photo_message)) * $font_size * 1.35;
         $img_x = 0;
-        $str_arr = preg_split("/\n/", $photo_message);
+        $str_arr = preg_split('/\n|\\n/', $photo_message);
         foreach ($str_arr as $str_val) if ($img_x < strlen($str_val)) $img_x = strlen($str_val);
         $img_x = $font_size * ($img_x * 0.44 + 2);
 
@@ -52,7 +53,7 @@ class TG
 
         imagefilledrectangle($im, 0, 0, $img_x, $img_y, $white);
         imagefttext($im, $font_size, 0, $font_size, $font_size, $black, $font_file, $photo_message);
-        imagejpeg($im, 'gen_image.jpeg');
+        imagejpeg($im, $pfilename);
         imagedestroy($im);
 
         //Удаление клавы
@@ -63,7 +64,7 @@ class TG
             
             $data = array(
                 'chat_id' => $id,
-                'photo' => 'https://dpos.space/portfoleo-bot/gen_image.jpeg',
+                'photo' => 'https://dpos.space/portfoleo-bot/' . $pfilename,
                 'caption' => $message,
                 'parse_mode' => 'HTML',
                 'reply_markup' => $encodedMarkup
@@ -71,7 +72,7 @@ class TG
         } else { //Отправка сообщения
             $data = array(
                 'chat_id' => $id,
-                'photo' => 'https://dpos.space/portfoleo-bot/gen_image.jpeg',
+                'photo' => 'https://dpos.space/portfoleo-bot/' . $pfilename,
                 'caption' => $message,
                 'parse_mode' => 'HTML',
             );
@@ -79,6 +80,8 @@ class TG
         if ($reply_to_message_id != 0) $data['reply_to_message_id'] = $reply_to_message_id;
 
         $out = $this->request('sendPhoto', $data);
+        
+        unlink($pfilename);
         return $out;
     }
 
